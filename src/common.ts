@@ -11,14 +11,8 @@ config({
 export const getWallet = (index = 0): Keypair => {
     const DEFAULT_PATH = (index: number) => `m/44'/501'/${index}'/0'`;
 
-    console.log(process.env.MNEMONIC as string)
-
     const seed = bip39.mnemonicToSeedSync(process.env.MNEMONIC as string);
-    console.log({
-        seed: seed.toString('hex')
-    })
     const hd = HDKey.fromMasterSeed(seed.toString('hex'));
-    console.log(hd.derive(DEFAULT_PATH(index)).privateKey)
 
     return Keypair.fromSeed(hd.derive(DEFAULT_PATH(index)).privateKey);
 }
